@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEELS | Web制作 / 発信導線設計</title>
+<meta name="description" content="これから伸びる人のための、発信導線まで考えるWeb制作。Webサイトを作って終わりにせず、誰に届け、どう信頼につなげるかまで一緒に整理します。個人制作者LEELSのポートフォリオサイトです。">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LEELS">
+<meta property="og:title" content="LEELS | Web制作 / 発信導線設計">
+<meta property="og:description" content="これから伸びる人のための、発信導線まで考えるWeb制作。">
+<meta property="og:image" content="./images/hero-main.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LEELS | Web制作 / 発信導線設計">
+<meta name="twitter:description" content="これから伸びる人のための、発信導線まで考えるWeb制作。">
+
+<link rel="icon" href="./images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a class="header__brand" href="#top" aria-label="LEELS トップへ">
+      <img class="header__icon" src="./images/icon-avatar.png" alt="LEELS アイコン" width="36" height="36">
+      <span class="header__name">LEELS</span>
+    </a>
+
+    <button class="header__toggle" id="navToggle" aria-expanded="false" aria-controls="headerNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="header__nav" id="headerNav" aria-label="サイト内ナビゲーション">
+      <ul class="header__nav-list">
+        <li><a href="#candos">できること</a></li>
+        <li><a href="#works">制作事例</a></li>
+        <li><a href="#fitcheck">相性の話</a></li>
+        <li><a class="header__nav-cta" href="#contact">相談する</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== First View ===== -->
+  <section class="hero" id="top">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <p class="label">WEB制作 / 発信導線設計</p>
+        <h1 class="hero__copy">
+          <span class="hero__line">これから伸びる人のための、</span>
+          <span class="hero__line">発信導線まで考えるWeb制作。</span>
+        </h1>
+        <p class="hero__sub">
+          Webサイトを作って終わりにせず、<br class="br-pc">
+          誰に届け、どう信頼につなげるかまで一緒に整理します。<br class="br-pc">
+          小さく始める事業や発信を、Web制作の面から支えます。
+        </p>
+
+        <div class="hero__bubble">
+          <img src="./images/icon-avatar.png" alt="" width="40" height="40">
+          <p>まずは雑談からでも大丈夫です</p>
+        </div>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#contact">まずは相談する</a>
+          <a class="btn btn--secondary" href="#candos">できることを見る</a>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <img src="./images/hero-main.png" alt="ノートPCで作業するLEELSのイメージ" width="640" height="640">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Concept ===== -->
+  <section class="section concept" id="concept">
+    <div class="container concept__inner">
+      <div class="concept__eyebrow">
+        <img src="./images/icon-avatar.png" alt="" width="44" height="44">
+        <p class="label">CONCEPT</p>
+      </div>
+      <h2 class="section-title">私も、まだ成長の途中にいます。</h2>
+      <div class="concept__body">
+        <p>
+          だからこそ、すでに完成された大きな企業よりも、<br class="br-pc">
+          これから事業を伸ばそうとしている個人や小さな会社の力になりたい。
+        </p>
+        <p>
+          Webサイトは、完成した瞬間がゴールではありません。<br class="br-pc">
+          事業の変化に合わせて育てていくもの。
+        </p>
+        <p>
+          一緒に考え、一緒に前へ進む制作者でありたいと思っています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== できること ===== -->
+  <section class="section section--soft" id="candos">
+    <div class="container">
+      <p class="label label--center">CAN DO</p>
+      <h2 class="section-title section-title--center">できること</h2>
+
+      <div class="grid grid--3">
+        <article class="card">
+          <span class="card__num">01</span>
+          <h3 class="card__title">Webサイト制作</h3>
+          <p class="card__text">目的に合わせた設計・デザイン・実装</p>
+        </article>
+        <article class="card">
+          <span class="card__num">02</span>
+          <h3 class="card__title">サイト構成設計</h3>
+          <p class="card__text">何をどの順番で伝えるかの整理</p>
+        </article>
+        <article class="card">
+          <span class="card__num">03</span>
+          <h3 class="card__title">文章・伝え方の整理</h3>
+          <p class="card__text">事業や想いを言葉にする手伝い</p>
+        </article>
+        <article class="card">
+          <span class="card__num">04</span>
+          <h3 class="card__title">見せ方（デザイン）の整理</h3>
+          <p class="card__text">世界観や印象を一貫させる</p>
+        </article>
+        <article class="card">
+          <span class="card__num">05</span>
+          <h3 class="card__title">SNS→Webサイトの導線設計</h3>
+          <p class="card__text">Instagram・X・noteからの流れを設計</p>
+        </article>
+        <article class="card">
+          <span class="card__num">06</span>
+          <h3 class="card__title">AIを活用した制作効率化</h3>
+          <p class="card__text">効率化した分を、考える時間に還元</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 対応していないこと ===== -->
+  <section class="section" id="not-included">
+    <div class="container container--narrow">
+      <p class="label">NOT INCLUDED</p>
+      <h2 class="section-title">できないことも、正直にお伝えします</h2>
+      <p class="body-text">Web制作を主軸にしているからこそ、以下は対応していません。</p>
+
+      <ul class="not-list">
+        <li>SNS運用代行・毎日の投稿作成</li>
+        <li>コメント返信・DM対応</li>
+        <li>広告運用</li>
+        <li>丸投げ前提の継続運用</li>
+      </ul>
+
+      <p class="body-text body-text--note">これらが必要な場合は、専門の運用者と組むことをおすすめしています。</p>
+    </div>
+  </section>
+
+  <!-- ===== 制作の流れ ===== -->
+  <section class="section section--soft" id="flow">
+    <div class="container">
+      <p class="label label--center">FLOW</p>
+      <h2 class="section-title section-title--center">制作の流れ</h2>
+
+      <div class="grid grid--3">
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">1</span>
+          <h3 class="card__title">ヒアリング</h3>
+          <p class="card__text">今の状況や課題を聞かせてください</p>
+        </article>
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">2</span>
+          <h3 class="card__title">構成設計</h3>
+          <p class="card__text">伝える順番と導線を整理</p>
+        </article>
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">3</span>
+          <h3 class="card__title">デザイン</h3>
+          <p class="card__text">世界観と信頼感をかたちに</p>
+        </article>
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">4</span>
+          <h3 class="card__title">実装</h3>
+          <p class="card__text">レスポンシブ対応で実装</p>
+        </article>
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">5</span>
+          <h3 class="card__title">公開</h3>
+          <p class="card__text">公開後の見え方を確認</p>
+        </article>
+        <article class="card card--flow">
+          <span class="card__num card__num--flow">6</span>
+          <h3 class="card__title">改善提案</h3>
+          <p class="card__text">反応を見ながら次の一歩を提案</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 制作事例 ===== -->
+  <section class="section" id="works">
+    <div class="container">
+      <p class="label">WORKS</p>
+      <h2 class="section-title">制作事例</h2>
+      <p class="body-text works__note">自主制作・架空サービスを中心に、Webサイトの構成・見せ方・導線設計を意識して制作した事例です。</p>
+
+      <div class="grid grid--3">
+        <a class="work-card" href="https://nesta-works.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <div class="work-card__thumb">
+            <img src="./images/nesta-works.png" alt="NESTA WORKSのトップページイメージ" loading="lazy">
+          </div>
+          <div class="work-card__body">
+            <span class="status-badge">自主制作</span>
+            <h3 class="work-card__title">NESTA WORKS</h3>
+            <p class="work-card__text">都市型コワーキングスペースのWebサイト</p>
+            <span class="work-card__link">サイトを見る ↗</span>
+          </div>
+        </a>
+        <a class="work-card" href="https://kirameki-art-university.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <div class="work-card__thumb">
+            <img src="./images/kirameki-art-university.png" alt="KIRAMEKI ART UNIVERSITYのトップページイメージ" loading="lazy">
+          </div>
+          <div class="work-card__body">
+            <span class="status-badge">自主制作</span>
+            <h3 class="work-card__title">KIRAMEKI ART UNIVERSITY</h3>
+            <p class="work-card__text">芸術大学を想定したブランドサイト</p>
+            <span class="work-card__link">サイトを見る ↗</span>
+          </div>
+        </a>
+        <a class="work-card" href="https://wakkyai1617-boop.github.io/my-news-story/" target="_blank" rel="noopener noreferrer">
+          <div class="work-card__thumb">
+            <img src="./images/trusted-research-feed.png" alt="Trusted Research Feedのトップページイメージ" loading="lazy">
+          </div>
+          <div class="work-card__body">
+            <span class="status-badge">自主制作</span>
+            <h3 class="work-card__title">Trusted Research Feed</h3>
+            <p class="work-card__text">信頼できる情報を整理するリサーチUI</p>
+            <span class="work-card__link">サイトを見る ↗</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 相性の話 ===== -->
+  <section class="section section--soft" id="fitcheck">
+    <div class="container">
+      <p class="label label--center">FIT CHECK</p>
+      <h2 class="section-title section-title--center">正直な相性の話</h2>
+
+      <div class="grid grid--2">
+        <article class="fit-card">
+          <div class="fit-card__head">
+            <img src="./images/icon-avatar.png" alt="" width="40" height="40">
+            <h3 class="fit-card__title">こんな方とご一緒したいです</h3>
+          </div>
+          <ul class="fit-card__list">
+            <li>これから事業を伸ばしたい方</li>
+            <li>一緒に考えながら進めたい方</li>
+            <li>発信とサイトをつなげたい方</li>
+            <li>じっくり相談しながら決めたい方</li>
+          </ul>
+        </article>
+        <article class="fit-card fit-card--muted">
+          <div class="fit-card__head">
+            <h3 class="fit-card__title">合わないかもしれません</h3>
+          </div>
+          <ul class="fit-card__list">
+            <li>安さだけを重視する方</li>
+            <li>完全に丸投げしたい方</li>
+            <li>SNS運用代行を求める方</li>
+            <li>スピードだけを最優先したい方</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section cta" id="contact">
+    <div class="container cta__inner">
+      <img class="cta__icon" src="./images/icon-avatar.png" alt="" width="52" height="52">
+      <h2 class="section-title section-title--center">まずは今の状況を聞かせてください</h2>
+      <p class="body-text cta__text">
+        売り込みはしません。今考えていることや、なんとなくのイメージだけでも大丈夫です。<br class="br-pc">
+        フォームから送っていただいた内容をもとに、できることを一緒に整理します。
+      </p>
+      <a class="btn btn--primary btn--large" href="https://forms.gle/yqfq6wcf7kYw6Fs57" target="_blank" rel="noopener noreferrer">まずは相談してみる</a>
+      <p class="cta__note">返信の目安：2〜3営業日以内</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__copy">© 2026 LEELS — Web制作 / 発信導線設計</p>
+    <ul class="footer__nav">
+      <li><a href="#candos">できること</a></li>
+      <li><a href="#works">制作事例</a></li>
+      <li><a href="#contact">相談</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="./js/script.js"></script>
+</body>
+</html>
