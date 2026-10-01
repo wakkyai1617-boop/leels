@@ -114,10 +114,19 @@ button { font: inherit; }
 }
 .nav-link .no { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 .nav-contact {
-  font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+  /* Japanese label: Plex Mono has no kana, so fall through to the site's JP face. */
+  font-family: 'IBM Plex Mono', 'Noto Sans JP Variable', monospace; font-size: 12px; letter-spacing: 0.04em;
   padding: 9px 14px; border: 1px solid var(--ink); color: var(--ink);
   transition: background .2s;
 }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+/* Mobile mail link: icon-only, same 44px height and border as the Menu button. */
+.mail-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; box-sizing: border-box;
+  border: 1px solid var(--ink); color: var(--ink);
+}
+.mail-icon { display: block; }
 .menu-btn {
   background: none; border: 1px solid var(--ink); color: var(--ink);
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
@@ -365,10 +374,6 @@ h2.eyebrow { margin: 0; font-weight: inherit; }
 .contact-title .indent { padding-left: 0.9em; }
 .hl { background: linear-gradient(transparent 68%, var(--lime) 68%, var(--lime) 92%, transparent 92%); }
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); border-top: 1px solid var(--ink); }
-/* Email sits above the SNS row, full width; it takes over the row's top rule. */
-.contact-mail { border-top: 1px solid var(--ink); }
-.contact-mail + .contact-grid { border-top: 0; }
-.contact-mail .value { word-break: normal; }
 .contact-card { display: flex; flex-direction: column; gap: 28px; padding: 22px 20px 26px 14px; border-bottom: 1px solid var(--line); min-height: 44px; transition: background .2s; }
 .contact-card .top { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
 .contact-card .top .arrow { color: var(--ink); }

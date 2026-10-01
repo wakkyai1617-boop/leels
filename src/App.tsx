@@ -121,10 +121,15 @@ function Header({ mobile, active, menuOpen, onOpenMenu }: { mobile: boolean; act
         <span className="brand-sub">Web Creator</span>
       </a>
       {mobile ? (
-        <button ref={btnRef} type="button" className="menu-btn" onClick={onOpenMenu} aria-expanded={menuOpen} aria-label="Open menu">
-          <span className="bars"><span /><span /></span>
-          <span>Menu</span>
-        </button>
+        <div className="header-actions">
+          <a href={`mailto:${email}`} className="mail-btn hover-lime" aria-label={`ご連絡はこちら（メール: ${email}）`} title={email} style={{ '--mark-d': '300ms' } as CSSProperties}>
+            <MailIcon />
+          </a>
+          <button ref={btnRef} type="button" className="menu-btn" onClick={onOpenMenu} aria-expanded={menuOpen} aria-label="Open menu">
+            <span className="bars"><span /><span /></span>
+            <span>Menu</span>
+          </button>
+        </div>
       ) : (
         <nav aria-label="Main" className="nav">
           {NAV.map(n => (
@@ -133,7 +138,7 @@ function Header({ mobile, active, menuOpen, onOpenMenu }: { mobile: boolean; act
               <span>{n.label}</span>
             </a>
           ))}
-          <a href="#contact" className="nav-contact hover-lime" style={{ '--mark-d': '450ms' } as CSSProperties}>Get in touch <span className="nudge nudge-ur">↗</span></a>
+          <a href={`mailto:${email}`} className="nav-contact hover-lime" aria-label={`ご連絡はこちら（メール: ${email}）`} title={email} style={{ '--mark-d': '450ms' } as CSSProperties}>ご連絡はこちら <span className="nudge nudge-ur">↗</span></a>
         </nav>
       )}
     </header>
@@ -558,6 +563,15 @@ function Skills() {
   )
 }
 
+function MailIcon() {
+  return (
+    <svg className="mail-icon" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+      <rect x="2" y="4.5" width="16" height="11" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M2.5 5l7.5 6 7.5-6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  )
+}
+
 function Contact() {
   return (
     <section id="contact" className="contact" data-section="contact">
@@ -566,14 +580,6 @@ function Contact() {
         <span className="mask"><span data-reveal="mask">Let’s</span></span>
         <span className="mask indent"><span data-reveal="mask" data-delay="80"><span className="hl">connect</span>.</span></span>
       </h2>
-      <a href={`mailto:${email}`} className="contact-card contact-mail hover-lime" style={{ '--mark-d': '650ms' } as CSSProperties}>
-        <span className="top"><span>Email</span><span className="arrow nudge nudge-r">→</span></span>
-        <span className="value">
-          <svg className="sns-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="4.5" width="16" height="11" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M2.5 5l7.5 6 7.5-6" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>
-          {/* Wraps only before the "@" on narrow screens, never inside a word. */}
-          <span className="handle"><span className="nw">{email.slice(0, email.indexOf('@'))}</span><wbr /><span className="nw">{email.slice(email.indexOf('@'))}</span></span>
-        </span>
-      </a>
       <div className="contact-grid">
         {contacts.map(c => (
           <a key={c.label} href={c.url} target="_blank" rel="noopener noreferrer" className="contact-card hover-lime" style={{ '--mark-d': '650ms' } as CSSProperties}>
