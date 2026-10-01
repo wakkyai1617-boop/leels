@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
-import { contacts, heroIcon, labGroups, labLogs, webSkills, webWorks, type LabMedia, type WebWork } from './content'
+import { contacts, email, heroIcon, labGroups, labLogs, webSkills, webWorks, type LabMedia, type WebWork } from './content'
 import { useMotionDisabledByDefault } from './hooks/useMotionPreference'
 import { useReveal } from './hooks/useReveal'
 
@@ -566,6 +566,14 @@ function Contact() {
         <span className="mask"><span data-reveal="mask">Let’s</span></span>
         <span className="mask indent"><span data-reveal="mask" data-delay="80"><span className="hl">connect</span>.</span></span>
       </h2>
+      <a href={`mailto:${email}`} className="contact-card contact-mail hover-lime" style={{ '--mark-d': '650ms' } as CSSProperties}>
+        <span className="top"><span>Email</span><span className="arrow nudge nudge-r">→</span></span>
+        <span className="value">
+          <svg className="sns-icon" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="4.5" width="16" height="11" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M2.5 5l7.5 6 7.5-6" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>
+          {/* Wraps only before the "@" on narrow screens, never inside a word. */}
+          <span className="handle"><span className="nw">{email.slice(0, email.indexOf('@'))}</span><wbr /><span className="nw">{email.slice(email.indexOf('@'))}</span></span>
+        </span>
+      </a>
       <div className="contact-grid">
         {contacts.map(c => (
           <a key={c.label} href={c.url} target="_blank" rel="noopener noreferrer" className="contact-card hover-lime" style={{ '--mark-d': '650ms' } as CSSProperties}>

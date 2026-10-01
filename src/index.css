@@ -365,6 +365,10 @@ h2.eyebrow { margin: 0; font-weight: inherit; }
 .contact-title .indent { padding-left: 0.9em; }
 .hl { background: linear-gradient(transparent 68%, var(--lime) 68%, var(--lime) 92%, transparent 92%); }
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); border-top: 1px solid var(--ink); }
+/* Email sits above the SNS row, full width; it takes over the row's top rule. */
+.contact-mail { border-top: 1px solid var(--ink); }
+.contact-mail + .contact-grid { border-top: 0; }
+.contact-mail .value { word-break: normal; }
 .contact-card { display: flex; flex-direction: column; gap: 28px; padding: 22px 20px 26px 14px; border-bottom: 1px solid var(--line); min-height: 44px; transition: background .2s; }
 .contact-card .top { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
 .contact-card .top .arrow { color: var(--ink); }

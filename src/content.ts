@@ -60,6 +60,9 @@ export const labGroups: { k: LabKey; code: string; name: string; field: string; 
 
 export const webSkills = ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Git / GitHub', 'AI Workflow']
 
+/** Work email, shown in full in Contact as a mailto: link. */
+export const email = 'heike.walking.1617@gmail.com'
+
 /**
  * SNS links, shown as "@handle" (note: "/handle") in Contact and the mobile menu.
  * Change the handle and url together when an account changes.
