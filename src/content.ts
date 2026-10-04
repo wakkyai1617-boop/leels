@@ -24,44 +24,10 @@ export const webWorks: WebWork[] = [
   { name: 'NESTA WORKS', cover: 'Coworking', year: '2026', cat: 'Service Site', role: 'Plan / Design / Dev', stack: 'Next.js · TypeScript · Tailwind CSS', desc: '架空の都市型コワーキングスペース「NESTA WORKS」のサービスサイト。利用者の悩みから設備・空間・料金プラン・FAQへと、見学予約につながる流れで情報を整理。', href: 'https://nesta-works.vercel.app/', image: '/assets/works/nesta.webp' },
 ]
 
-type LabKey = 'ae' | 'bl'
-
-/**
- * Study output. Omit until a real file exists — the tile then says
- * "PREVIEW PENDING" instead of implying a video/render is there.
- * Videos should always carry a poster so nothing heavy loads up front.
- */
-export type LabMedia =
-  | { type: 'image'; src: string; alt: string }
-  | { type: 'video'; src: string; poster: string; label: string }
-
-export type LabLog = {
-  k: LabKey
-  date: string
-  title: string
-  learned: string
-  practice: string
-  media?: LabMedia
-  wip?: boolean
-}
-
-/** Newest first. All logs are listed. */
-export const labLogs: LabLog[] = [
-  { k: 'ae', date: '2026.09', title: 'Kinetic Type Study 03', learned: '文字単位のディレイで、読みやすさを保ったまま動きを付ける方法。', practice: 'キネティックタイポグラフィ', wip: true },
-  { k: 'bl', date: '2026.08', title: 'Room Study 01', learned: 'ライトの位置と強さで、空間の奥行きが大きく変わること。', practice: '室内空間のモデリングとライティング', wip: true },
-  { k: 'ae', date: '2026.07', title: 'Shape Loop Study 02', learned: '継ぎ目の見えないループの作り方。', practice: 'シェイプレイヤーのループ' },
-  { k: 'bl', date: '2026.06', title: 'Material Study 02', learned: '質感の違いを光で見せる。', practice: 'マテリアル表現の基礎' },
-]
-
-export const labGroups: { k: LabKey; code: string; name: string; field: string; study: string }[] = [
-  { k: 'ae', code: 'AE', name: 'After Effects', field: 'Motion Graphics', study: 'MOTION STUDY' },
-  { k: 'bl', code: 'BL', name: 'Blender', field: '3D Modeling', study: '3D STUDY' },
-]
-
 export const webSkills = ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Git / GitHub', 'AI Workflow']
 
-/** Work email, shown in full in Contact as a mailto: link. */
-export const email = 'heike.walking.1617@gmail.com'
+/** Header "ご連絡はこちら": opens an Instagram DM thread (official ig.me short link). */
+export const contactDm = 'https://ig.me/m/teel_0016'
 
 /**
  * SNS links, shown as "@handle" (note: "/handle") in Contact and the mobile menu.

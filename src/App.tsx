@@ -1,9 +1,7 @@
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
-import { contacts, email, heroIcon, labGroups, labLogs, webSkills, webWorks, type LabMedia, type WebWork } from './content'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { contactDm, contacts, heroIcon, webSkills, webWorks, type WebWork } from './content'
 import { useMotionDisabledByDefault } from './hooks/useMotionPreference'
 import { useReveal } from './hooks/useReveal'
-
-type Tab = 'web' | 'lab'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 const MOBILE_MAX = 820
@@ -15,10 +13,7 @@ const NAV = [
   { id: 'contact', label: 'Contact', no: '04' },
 ]
 
-const groupOf = Object.fromEntries(labGroups.map(g => [g.k, g]))
-const logs = labLogs.map(l => ({ ...l, group: groupOf[l.k] }))
 const webCount = pad(webWorks.length)
-const labCount = pad(logs.length)
 
 /** Coalesce scroll/resize bursts into one callback per frame. */
 function rafThrottle(fn: () => void) {
@@ -66,7 +61,6 @@ export default function App() {
   const active = useActiveSection()
   const reduce = useMotionDisabledByDefault()
   const [menu, setMenu] = useState(false)
-  const [tab, setTab] = useState<Tab>('web')
   const menuOpen = mobile && menu
 
   useEffect(() => { setMenu(false) }, [mobile])
@@ -86,7 +80,7 @@ export default function App() {
     }
   }, [menuOpen])
 
-  useReveal(reduce, [tab])
+  useReveal(reduce, [])
 
   return (
     <div className="page">
@@ -94,8 +88,8 @@ export default function App() {
       {menuOpen && <MobileMenu onClose={() => setMenu(false)} />}
 
       <main className="main">
-        <Hero onSelect={setTab} />
-        <Works mobile={mobile} tab={tab} onTab={setTab} reduce={reduce} />
+        <Hero />
+        <Works mobile={mobile} reduce={reduce} />
         <About />
         <Skills />
         <Contact />
@@ -122,8 +116,8 @@ function Header({ mobile, active, menuOpen, onOpenMenu }: { mobile: boolean; act
       </a>
       {mobile ? (
         <div className="header-actions">
-          <a href={`mailto:${email}`} className="mail-btn hover-lime" aria-label={`ご連絡はこちら（メール: ${email}）`} title={email} style={{ '--mark-d': '300ms' } as CSSProperties}>
-            <MailIcon />
+          <a href={contactDm} target="_blank" rel="noopener noreferrer" className="mail-btn hover-lime" aria-label="ご連絡はこちら（InstagramのDMを開く）" style={{ '--mark-d': '300ms' } as CSSProperties}>
+            <DmIcon />
           </a>
           <button ref={btnRef} type="button" className="menu-btn" onClick={onOpenMenu} aria-expanded={menuOpen} aria-label="Open menu">
             <span className="bars"><span /><span /></span>
@@ -138,7 +132,7 @@ function Header({ mobile, active, menuOpen, onOpenMenu }: { mobile: boolean; act
               <span>{n.label}</span>
             </a>
           ))}
-          <a href={`mailto:${email}`} className="nav-contact hover-lime" aria-label={`ご連絡はこちら（メール: ${email}）`} title={email} style={{ '--mark-d': '450ms' } as CSSProperties}>ご連絡はこちら <span className="nudge nudge-ur">↗</span></a>
+          <a href={contactDm} target="_blank" rel="noopener noreferrer" className="nav-contact hover-lime" aria-label="ご連絡はこちら（InstagramのDMを開く）" style={{ '--mark-d': '450ms' } as CSSProperties}>ご連絡はこちら <span className="nudge nudge-ur">↗</span></a>
         </nav>
       )}
     </header>
@@ -189,7 +183,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   )
 }
 
-function Hero({ onSelect }: { onSelect: (t: Tab) => void }) {
+function Hero() {
   return (
     <section id="hero" className="hero" data-section="hero">
       <div className="hero-top">
@@ -200,7 +194,7 @@ function Hero({ onSelect }: { onSelect: (t: Tab) => void }) {
             <span className="mask"><span data-reveal="mask" data-delay="130">Creator</span></span>
           </h1>
           <div className="hero-row">
-            <a href="#works" className="hero-cta hover-lime" style={{ '--mark-d': '520ms' } as CSSProperties} onClick={() => onSelect('web')} data-reveal="fade" data-delay="380">
+            <a href="#works" className="hero-cta hover-lime" style={{ '--mark-d': '520ms' } as CSSProperties} data-reveal="fade" data-delay="380">
               <span className="box"><span className="nudge nudge-d">↓</span></span>
               <span className="text">View Web Works</span>
               <span className="count">({webCount})</span>
@@ -217,36 +211,7 @@ function Hero({ onSelect }: { onSelect: (t: Tab) => void }) {
   )
 }
 
-const TABS = [
-  // *Short: swapped in visually at ≤360px; the full text stays in the accessible name.
-  { k: 'web' as const, no: '01', label: 'Web site', badge: 'COMPLETED / PERSONAL PROJECTS', badgeShort: 'COMPLETED', count: `(${webCount} works)`, big: true },
-  { k: 'lab' as const, no: '02', label: 'After Effects・Blender', labelShort: 'AE / Blender', badge: 'LEARNING LOG', badgeShort: 'LEARNING', count: `(${labCount} logs)`, big: false },
-]
-
-/** Full text normally; on ≤360px screens the short form is shown and the full one is kept for screen readers only. */
-function Responsive({ full, short }: { full: string; short?: string }) {
-  if (!short) return <Chunks text={full} />
-  return <><span className="rs-full"><Chunks text={full} /></span><span className="rs-short" aria-hidden="true">{short}</span></>
-}
-
-/**
- * Lets a label wrap only between its parts ("COMPLETED /" | "PERSONAL PROJECTS",
- * "After Effects" | "・Blender"), so a separator never ends a line on its own.
- */
-function Chunks({ text }: { text: string }) {
-  const parts = text.split(/(?<=\/ )|(?=・)/)
-  return <>{parts.map((p, i) => <Fragment key={i}>{i > 0 && <wbr />}<span className="nw">{p}</span></Fragment>)}</>
-}
-
-function Works({ mobile, tab, onTab, reduce }: { mobile: boolean; tab: Tab; onTab: (t: Tab) => void; reduce: boolean }) {
-  const onTabKey = (e: KeyboardEvent) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
-    e.preventDefault()
-    const next = tab === 'web' ? 'lab' : 'web'
-    onTab(next)
-    setTimeout(() => document.getElementById('tab-' + next)?.focus(), 0)
-  }
-
+function Works({ mobile, reduce }: { mobile: boolean; reduce: boolean }) {
   return (
     <section id="works" className="works" data-section="works">
       <div className="works-head">
@@ -254,7 +219,7 @@ function Works({ mobile, tab, onTab, reduce }: { mobile: boolean; tab: Tab; onTa
           <div className="eyebrow">
             <span>01 / WORKS</span>
             <span className="rule" />
-            <span className="sub">WEB SITE + LEARNING LOG</span>
+            <span className="sub">WEB SITE</span>
           </div>
           <h2 className="display-h2 works-title">
             <span className="mask"><span data-reveal="mask">Works</span></span>
@@ -262,38 +227,7 @@ function Works({ mobile, tab, onTab, reduce }: { mobile: boolean; tab: Tab; onTa
         </div>
       </div>
 
-      <div role="tablist" aria-label="Works category" className="tablist" onKeyDown={onTabKey}>
-        {TABS.map(t => {
-          const on = tab === t.k
-          return (
-            <button
-              key={t.k}
-              type="button"
-              role="tab"
-              id={`tab-${t.k}`}
-              aria-selected={on}
-              aria-controls={`panel-${t.k}`}
-              tabIndex={on ? 0 : -1}
-              className="tab"
-              onClick={() => onTab(t.k)}
-            >
-              <span className="tab-meta">
-                <span className="tab-mark" />
-                <span className="tab-no">{t.no}</span>
-                <span className={`tab-badge ${t.big ? 'solid' : 'dashed'}`}><Responsive full={t.badge} short={t.badgeShort} /></span>
-              </span>
-              <span className="tab-row">
-                <span className={`tab-label ${t.big ? 'lg' : 'sm'}`}><Responsive full={t.label} short={t.labelShort} /></span>
-                <span className="tab-count">{t.count}</span>
-              </span>
-              <span className="tab-bar" />
-              <span className="tab-accent" />
-            </button>
-          )
-        })}
-      </div>
-
-      {tab === 'web' ? <WebPanel mobile={mobile} reduce={reduce} /> : <LabPanel />}
+      <WebPanel mobile={mobile} reduce={reduce} />
     </section>
   )
 }
@@ -382,7 +316,7 @@ function useCarousel(reduce: boolean) {
 function WebPanel({ mobile, reduce }: { mobile: boolean; reduce: boolean }) {
   const { ref, state, stepBy } = useCarousel(reduce)
   return (
-    <div role="tabpanel" id="panel-web" aria-labelledby="tab-web" className="panel-web">
+    <div id="panel-web" className="panel-web">
       <div className="carousel-head">
         <div className="panel-note">
           <span className="tag-solid">COMPLETED</span>
@@ -450,52 +384,6 @@ function WorkCard({ w, no }: { w: WebWork; no: string }) {
   )
 }
 
-/** Real study output, or an honest "pending" label when there's none yet. */
-function LabThumb({ media, study }: { media?: LabMedia; study: string }) {
-  if (!media) return <span className="lab-kind">PREVIEW PENDING — {study}</span>
-  if (media.type === 'image') return <img className="lab-file" src={media.src} alt={media.alt} loading="lazy" decoding="async" />
-  // preload="none" + poster: only the poster image loads until the viewer presses play.
-  return <video className="lab-file" src={media.src} poster={media.poster} aria-label={media.label} preload="none" controls muted loop playsInline />
-}
-
-function LabPanel() {
-  return (
-    <div role="tabpanel" id="panel-lab" aria-labelledby="tab-lab" className="panel-lab">
-      <div className="lab-head">
-        <div className="panel-note">
-          <span className="tag-lime">IN PROGRESS</span>
-          <span>LEARNING LOG</span>
-          <span className="sub">— 完成作品ではなく、学習中の制作過程の記録</span>
-        </div>
-        <span className="lab-latest">{labCount} LOGS — NEWEST FIRST</span>
-      </div>
-      <ol className="lab-list">
-        {logs.map(l => (
-          <li key={l.title} className="lab-item">
-            <div className="lab-media">
-              <LabThumb media={l.media} study={l.group.study} />
-              <span className="lab-code">{l.group.code}</span>
-              <span className={`lab-status${l.wip ? ' wip' : ''}`}>{l.wip ? 'WIP' : 'STUDY'}</span>
-            </div>
-            <div className="lab-body">
-              <div className="lab-meta">
-                <span>{l.group.name}</span>
-                <span className="date">{l.date}</span>
-              </div>
-              <h3 className="lab-title">{l.title}</h3>
-              <dl className="lab-dl">
-                <div><dt>THEME</dt><dd>{l.group.field}</dd></div>
-                <div><dt>PRACTICING</dt><dd className="jp">{l.practice}</dd></div>
-                <div><dt>LEARNED</dt><dd className="jp">{l.learned}</dd></div>
-              </dl>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  )
-}
-
 function About() {
   return (
     <section id="about" className="section about" data-section="about">
@@ -509,23 +397,16 @@ function About() {
         </p>
         <div className="about-cols">
           <p data-reveal="fade">伝える内容の整理から、<wbr />デザイン、<wbr />コーディングまでを<wbr />一人で担当します。</p>
-          <p data-reveal="fade" data-delay="80">現在はAfter Effectsと<wbr />Blenderを学習中。<wbr />モーションや3Dを<wbr />Webの表現に<wbr />取り入れることが目標です。</p>
         </div>
         <ol aria-label="Process" className="process">
           <li><span className="step">01 →</span><span className="name">Plan</span></li>
           <li><span className="step">02 →</span><span className="name">Design</span></li>
           <li><span className="step">03 →</span><span className="name">Code</span></li>
-          <li className="next"><span className="step">+ NEXT — LEARNING</span><span className="name">Motion / 3D</span></li>
         </ol>
       </div>
     </section>
   )
 }
-
-const LEARNING = [
-  { name: 'After Effects', chips: ['Motion Graphics', 'Animation'] },
-  { name: 'Blender', chips: ['Modeling', '3D / CG'] },
-]
 
 function Skills() {
   return (
@@ -543,31 +424,17 @@ function Skills() {
             ))}
           </ul>
         </div>
-        <div className="learning">
-          <div className="learning-head">
-            <h3>Learning</h3>
-            <span className="tag-lime">IN PROGRESS</span>
-          </div>
-          <div className="learning-items">
-            {LEARNING.map(l => (
-              <div key={l.name}>
-                <div className="learning-title"><span>{l.name}</span><span className="since">SINCE 2026</span></div>
-                <div className="chips">{l.chips.map(c => <span key={c}>{c}</span>)}</div>
-              </div>
-            ))}
-          </div>
-          <p className="learning-note">学習中のため、実案件での使用はまだありません。</p>
-        </div>
       </div>
     </section>
   )
 }
 
-function MailIcon() {
+/** Paper-plane "send a message" mark for the mobile header DM link. */
+function DmIcon() {
   return (
     <svg className="mail-icon" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
-      <rect x="2" y="4.5" width="16" height="11" fill="none" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M2.5 5l7.5 6 7.5-6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M17.5 2.5L2.5 8.5l6 2.5 2.5 6z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M17.5 2.5L8.5 11" fill="none" stroke="currentColor" strokeWidth="1.4" />
     </svg>
   )
 }
