@@ -294,6 +294,7 @@ h2.eyebrow { margin: 0; font-weight: inherit; }
 .about-lead .keep { word-break: keep-all; }
 .about-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px clamp(24px, 4vw, 56px); }
 .about-cols p { margin: 0; font-family: var(--jp); font-size: 15px; line-height: 2; color: var(--text-2); word-break: keep-all; overflow-wrap: anywhere; max-width: 23em; }
+.about-cols .about-note { margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--muted); }
 .process { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); border-top: 1px solid var(--ink); }
 .process li { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 0 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; }
 .process .step { font-size: 10px; color: var(--muted); }

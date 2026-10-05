@@ -392,11 +392,14 @@ function About() {
       </div>
       <div className="about-main">
         <p className="about-lead">
-          <span className="mask keep"><span data-reveal="mask">Webサイトを、<wbr />企画から</span></span>
-          <span className="mask"><span data-reveal="mask" data-delay="70">デザイン、実装まで。</span></span>
+          <span className="mask keep"><span data-reveal="mask">Webサイトの<wbr />企画から</span></span>
+          <span className="mask keep"><span data-reveal="mask" data-delay="70">実装まで<wbr />対応しています。</span></span>
         </p>
         <div className="about-cols">
-          <p data-reveal="fade">伝える内容の整理から、<wbr />デザイン、<wbr />コーディングまでを<wbr />一人で担当します。</p>
+          <div data-reveal="fade">
+            <p>ご相談いただいた内容を<wbr />整理し、<wbr />デザインから<wbr />コーディングまで<wbr />担当します。</p>
+            <p className="about-note">※デザイン・コーディングには<wbr />AIを活用しています。</p>
+          </div>
         </div>
         <ol aria-label="Process" className="process">
           <li><span className="step">01 →</span><span className="name">Plan</span></li>
