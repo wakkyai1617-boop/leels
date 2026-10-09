@@ -22,6 +22,7 @@ export const webWorks: WebWork[] = [
   { name: 'KIRAMEKI ART UNIVERSITY', cover: 'Art Univ.', year: '2026', cat: 'University Site', role: 'Plan / Design / Dev', stack: 'Next.js · TypeScript · Tailwind CSS', desc: '架空の美術大学「綺羅目芸術大学」のサイト。「世界を、もっと派手に壊せ。」をコピーに、ビビッドな配色とコラージュ表現で学科・キャンパス・オープンキャンパス情報を構成。', href: 'https://kirameki-art-university.vercel.app/', image: '/assets/works/kirameki.webp' },
   { name: 'seven — Work Beyond Roles', cover: 'seven', year: '2026', cat: 'Corporate Site', role: 'Plan / Design / Dev', stack: 'Next.js', desc: '架空のクリエイティブチーム「seven」のコーポレートサイト。「役割を人に合わせる」という考え方を軸に、事業・実績・メンバー・採用までを落ち着いたトーンで設計。', href: 'https://seven-three-beta.vercel.app/', image: '/assets/works/seven.webp' },
   { name: 'NESTA WORKS', cover: 'Coworking', year: '2026', cat: 'Service Site', role: 'Plan / Design / Dev', stack: 'Next.js · TypeScript · Tailwind CSS', desc: '架空の都市型コワーキングスペース「NESTA WORKS」のサービスサイト。利用者の悩みから設備・空間・料金プラン・FAQへと、見学予約につながる流れで情報を整理。', href: 'https://nesta-works.vercel.app/', image: '/assets/works/nesta.webp' },
+  { name: '琥珀屋', cover: 'Ryokan', year: '2026', cat: 'Ryokan Site', role: 'Plan / Design / Dev', stack: 'Astro · TypeScript · CSS', desc: '架空の温泉旅館「琥珀屋」のサイト。霧の山あいに建つ木造の宿を、縦書きの見出しと写真の余白で静かに見せ、中庭・客室・温泉・食事処・アクセス・空室確認までを構成。', href: 'https://kohakuya.vercel.app/', image: '/assets/works/kohakuya.webp' },
 ]
 
 export const webSkills = ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Git / GitHub', 'AI Workflow']

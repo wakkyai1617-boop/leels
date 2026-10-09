@@ -262,7 +262,12 @@ function useCarousel(reduce: boolean) {
       const i = max <= 2 ? 0 : el.scrollLeft >= max - 2 ? n - 1 : Math.round(el.scrollLeft / step)
       const vis = Math.max(1, (el.clientWidth + 20) / step)
       const barW = Math.min(100, vis / n * 100)
-      const next = { i, barW, barL: (max > 0 ? el.scrollLeft / max : 0) * (100 - barW), atStart: el.scrollLeft <= 2, atEnd: el.scrollLeft >= max - 2 }
+      // Snap can park the last card a few px short of the scroll limit (narrow
+      // screens), so "end" also means the last card is fully in view.
+      const last = cards[n - 1]
+      const lastInView = last.offsetLeft - cards[0].offsetLeft + last.offsetWidth <= el.scrollLeft + el.clientWidth + 2
+      const atEnd = el.scrollLeft >= max - 2 || lastInView
+      const next = { i: atEnd ? n - 1 : i, barW, barL: (max > 0 ? el.scrollLeft / max : 0) * (100 - barW), atStart: el.scrollLeft <= 2, atEnd }
       setS(prev => (prev.i === next.i && prev.atStart === next.atStart && prev.atEnd === next.atEnd
         && Math.abs(prev.barW - next.barW) < 0.1 && Math.abs(prev.barL - next.barL) < 0.1) ? prev : next)
     }
