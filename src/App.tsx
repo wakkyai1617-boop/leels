@@ -232,24 +232,44 @@ function Works({ mobile, reduce }: { mobile: boolean; reduce: boolean }) {
   )
 }
 
-type CarouselState = { i: number; barW: number; barL: number; atStart: boolean; atEnd: boolean }
+type CarouselState = { first: number; last: number; barW: number; barL: number; atStart: boolean; atEnd: boolean }
+
+/**
+ * Scroll positions the arrows step between: each card's left edge, clamped to
+ * the scroll limit. When several cards fit on screen, the last few clamp to
+ * (nearly) the same spot; those are merged so every press moves one visible step.
+ */
+function carouselStops(el: HTMLElement) {
+  const c = el.querySelectorAll<HTMLElement>('[data-card]')
+  const max = el.scrollWidth - el.clientWidth
+  const step = c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : el.clientWidth
+  const stops: number[] = []
+  c.forEach(card => {
+    const x = card.offsetLeft - c[0].offsetLeft
+    const at = Math.min(max, x)
+    const prev = stops[stops.length - 1]
+    if (stops.length && at - prev < step / 2) {
+      // Keep the card-aligned stop if this card already fits there; else go to the limit.
+      if (x + card.offsetWidth > prev + el.clientWidth + 2) stops[stops.length - 1] = at
+    } else stops.push(at)
+  })
+  return stops
+}
 
 /** Horizontal scroller: mouse drag-to-scroll, arrow keys, and counter/progress state. */
 function useCarousel(reduce: boolean) {
   const [el, setEl] = useState<HTMLDivElement | null>(null)
-  const [s, setS] = useState<CarouselState>({ i: 0, barW: 100 / webWorks.length, barL: 0, atStart: true, atEnd: false })
+  const [s, setS] = useState<CarouselState>({ first: 0, last: 0, barW: 100 / webWorks.length, barL: 0, atStart: true, atEnd: false })
 
   const stepBy = useCallback((dir: number) => {
     if (!el) return
-    const c = el.querySelectorAll<HTMLElement>('[data-card]'), n = c.length
-    if (!n) return
-    // Move one card from the current one. At the end the last card can't sit at
-    // the left edge, so a plain scrollBy(-step) from there would skip a card.
-    const max = el.scrollWidth - el.clientWidth
-    const step = n > 1 ? c[1].offsetLeft - c[0].offsetLeft : el.clientWidth
-    const cur = el.scrollLeft >= max - 2 ? n - 1 : Math.round(el.scrollLeft / step)
-    const to = Math.max(0, Math.min(n - 1, cur + dir))
-    el.scrollTo({ left: Math.min(max, c[to].offsetLeft - c[0].offsetLeft), behavior: reduce ? 'auto' : 'smooth' })
+    const stops = carouselStops(el)
+    if (!stops.length) return
+    // Nearest stop to where we are now, then exactly one stop over.
+    let cur = 0
+    stops.forEach((p, k) => { if (Math.abs(p - el.scrollLeft) < Math.abs(stops[cur] - el.scrollLeft)) cur = k })
+    const to = Math.max(0, Math.min(stops.length - 1, cur + dir))
+    el.scrollTo({ left: stops[to], behavior: reduce ? 'auto' : 'smooth' })
   }, [el, reduce])
 
   useLayoutEffect(() => {
@@ -259,16 +279,23 @@ function useCarousel(reduce: boolean) {
       if (!n) return
       const max = el.scrollWidth - el.clientWidth
       const step = n > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1
-      const i = max <= 2 ? 0 : el.scrollLeft >= max - 2 ? n - 1 : Math.round(el.scrollLeft / step)
       const vis = Math.max(1, (el.clientWidth + 20) / step)
       const barW = Math.min(100, vis / n * 100)
-      // Snap can park the last card a few px short of the scroll limit (narrow
-      // screens), so "end" also means the last card is fully in view.
-      const last = cards[n - 1]
-      const lastInView = last.offsetLeft - cards[0].offsetLeft + last.offsetWidth <= el.scrollLeft + el.clientWidth + 2
-      const atEnd = el.scrollLeft >= max - 2 || lastInView
-      const next = { i: atEnd ? n - 1 : i, barW, barL: (max > 0 ? el.scrollLeft / max : 0) * (100 - barW), atStart: el.scrollLeft <= 2, atEnd }
-      setS(prev => (prev.i === next.i && prev.atStart === next.atStart && prev.atEnd === next.atEnd
+      // Counter = the cards on screen: first one at the left edge (within half a
+      // step) through the last one fully visible.
+      const L = el.scrollLeft, R = L + el.clientWidth, x0 = cards[0].offsetLeft
+      let first = 0, last = 0
+      cards.forEach((c, k) => {
+        const a = c.offsetLeft - x0
+        if (a <= L + step / 2) first = k
+        if (a + c.offsetWidth <= R + 2) last = k
+      })
+      last = Math.max(first, last)
+      // Snap can park the last card a few px short of the scroll limit, so "end"
+      // also means the last card is fully in view.
+      const atEnd = L >= max - 2 || last === n - 1
+      const next = { first, last, barW, barL: (max > 0 ? L / max : 0) * (100 - barW), atStart: L <= 2, atEnd }
+      setS(prev => (prev.first === next.first && prev.last === next.last && prev.atStart === next.atStart && prev.atEnd === next.atEnd
         && Math.abs(prev.barW - next.barW) < 0.1 && Math.abs(prev.barL - next.barL) < 0.1) ? prev : next)
     }
     const onScroll = rafThrottle(upd)
@@ -328,7 +355,7 @@ function WebPanel({ mobile, reduce }: { mobile: boolean; reduce: boolean }) {
           <span className="sub"><span className="nw">公開中の自主制作Webサイト</span> <wbr /><span className="nw">— 企画 / デザイン / 実装</span></span>
         </div>
         <div className="carousel-ctl">
-          <span className="counter" aria-live="polite">{pad(state.i + 1)} / {webCount}</span>
+          <span className="counter" aria-live="polite">{pad(state.first + 1)}{state.last > state.first && <>–{pad(state.last + 1)}</>} / {webCount}</span>
           <span className="track" aria-hidden="true">
             <span className="track-bar" style={{ width: `${state.barW}%`, left: `${state.barL}%` }} />
           </span>

@@ -233,7 +233,7 @@ h2.eyebrow { margin: 0; font-weight: inherit; }
 .panel-note .tag-solid { font-size: 11px; }
 .panel-note .sub { color: var(--muted); }
 .carousel-ctl { display: flex; align-items: center; gap: 14px; }
-.counter { font-family: var(--mono); font-size: 11px; color: var(--ink); letter-spacing: 0.06em; min-width: 56px; }
+.counter { font-family: var(--mono); font-size: 11px; color: var(--ink); letter-spacing: 0.06em; min-width: 56px; white-space: nowrap; }
 .track { position: relative; width: clamp(56px, 10vw, 140px); height: 1px; background: var(--line-2); }
 .track-bar { position: absolute; left: 0; top: -1px; height: 3px; background: var(--ink); }
 .step-btn {
